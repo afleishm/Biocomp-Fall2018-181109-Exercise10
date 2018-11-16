@@ -33,18 +33,17 @@ initialGuess=c(1,1,1,1)
 fit = optim(par=initialGuess,fn=nllike,x=data$x,y=data$y)
 fit2 = optim(par=initialGuess,fn=nllike2,x=data$x,y=data$y)
 # fit is a variable that contains a list describing the result of minimization
-# $par is a vector of most likely parameter values in the order specified by
-#   your custom likelihood function
-# $value is the minimum negative log likelihood found by optim
-# $counts gives us the number of parameter combinations tried by optim
-# $convergence is a code with information about the optim run; 0 means success
 print(fit)
 print(fit2)
 
+teststat = 2*(fit$value - fit2$value)
+df = length(fit2$par - fit$par) 
 
+pchisq(teststat, df, lower.tail = F)
 
-
-
+#Since p-value is approximately equal to 1, we fail to reject the null hypothesis that one model has a better fit than the other
+#We must conclude that there is no significant difference between the fits of the models
+#In this case, we should the linear model since it is simpler
 
 
 
